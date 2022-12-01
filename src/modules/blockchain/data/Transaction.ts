@@ -22,6 +22,7 @@ export interface ITransaction {
     timestamp: number;
     exchange_user_id: string;
     exchange_id: string;
+    signer: string;
     signature: string;
 }
 
@@ -67,6 +68,11 @@ export class Transaction implements ITransaction {
     public exchange_id: string;
 
     /**
+     * The signer
+     */
+    public signer: string;
+
+    /**
      * The signature
      */
     public signature: string;
@@ -82,6 +88,7 @@ export class Transaction implements ITransaction {
         timestamp: number,
         exchange_user_id: string,
         exchange_id: string,
+        signer?: string,
         signature?: string
     ) {
         this.trade_id = trade_id;
@@ -91,7 +98,9 @@ export class Transaction implements ITransaction {
         this.timestamp = timestamp;
         this.exchange_user_id = exchange_user_id;
         this.exchange_id = exchange_id;
-        if (signature) this.signature = signature;
+        if (signer !== undefined) this.signer = signer;
+        else this.signer = "";
+        if (signature !== undefined) this.signature = signature;
         else this.signature = "";
     }
 
@@ -118,6 +127,7 @@ export class Transaction implements ITransaction {
             value.timestamp,
             value.exchange_user_id,
             value.exchange_id,
+            value.signer,
             value.signature
         );
     }
@@ -134,6 +144,7 @@ export class Transaction implements ITransaction {
         hashPart(this.timestamp, buffer);
         hashPart(this.exchange_user_id, buffer);
         hashPart(this.exchange_id, buffer);
+        hashPart(this.signer, buffer);
     }
 
     /**
@@ -148,6 +159,7 @@ export class Transaction implements ITransaction {
             timestamp: this.timestamp,
             exchange_user_id: this.exchange_user_id,
             exchange_id: this.exchange_id,
+            signer: this.signer,
             signature: this.signature,
         };
     }
@@ -164,6 +176,7 @@ export class Transaction implements ITransaction {
             this.timestamp,
             this.exchange_user_id,
             this.exchange_id,
+            this.signer,
             this.signature
         );
     }
@@ -173,6 +186,7 @@ export class Transaction implements ITransaction {
      * @param signer Instances that can be signed
      */
     public async sign(signer: ethers.Signer) {
+        this.signer = await signer.getAddress();
         const h = hashFull(this);
         this.signature = await signer.signMessage(h.data);
     }
@@ -181,7 +195,7 @@ export class Transaction implements ITransaction {
      * Verifying the signature
      * @param address Signatory's wallet address
      */
-    public verify(address: string): boolean {
+    public verify(address?: string): boolean {
         const h = hashFull(this);
         let res: string;
         try {
@@ -189,6 +203,7 @@ export class Transaction implements ITransaction {
         } catch (error) {
             return false;
         }
-        return res.toLowerCase() === address.toLowerCase();
+        if (address !== undefined) return res.toLowerCase() === address.toLowerCase();
+        return res.toLowerCase() === this.signer.toLowerCase();
     }
 }

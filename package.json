@@ -1,5 +1,5 @@
 {
-    "name": "boa-rollup-sdk",
+    "name": "rollup-pm-sdk",
     "version": "1.0.0",
     "description": "The TypeScript Rollup SDK library",
     "main": "lib/index.js",

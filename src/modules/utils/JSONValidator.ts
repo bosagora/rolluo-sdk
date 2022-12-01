@@ -99,6 +99,9 @@ export class JSONValidator {
                     exchange_id: {
                         type: "string",
                     },
+                    signer: {
+                        type: "string",
+                    },
                     signature: {
                         type: "string",
                     },
@@ -112,6 +115,7 @@ export class JSONValidator {
                     "timestamp",
                     "exchange_user_id",
                     "exchange_id",
+                    "signer",
                     "signature",
                 ],
             },

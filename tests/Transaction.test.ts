@@ -20,6 +20,7 @@ describe("Transaction", () => {
     // The test codes below compare with the values calculated in Agora.
     it("Test for hash value of transaction data", async () => {
         const tx = new Transaction(
+            0,
             "12345678",
             "0x064c9Fc53d5936792845ca58778a52317fCf47F2",
             "0",
@@ -32,12 +33,13 @@ describe("Transaction", () => {
 
         assert.strictEqual(
             hashFull(tx).toString(),
-            "0x42bbb0aac4c177696e2033b6d86d7b97de326f2c82e4b3d7f62f3c066ce55240"
+            "0x107d8f927dd6e97d9956ac9084b26d31863f2e9616eff58b4446c17ecd4887d9"
         );
     });
 
     it("Test for Transaction.clone()", async () => {
         const tx = new Transaction(
+            0,
             "12345678",
             "0x064c9Fc53d5936792845ca58778a52317fCf47F2",
             "0",
@@ -54,6 +56,7 @@ describe("Transaction", () => {
 
     it("Test for Transaction.sign() & verify", async () => {
         const tx = new Transaction(
+            0,
             "12345678",
             "0x064c9Fc53d5936792845ca58778a52317fCf47F2",
             "0",
@@ -66,7 +69,7 @@ describe("Transaction", () => {
         await tx.sign(signer1);
         assert.strictEqual(
             tx.signature,
-            "0x0e1a3c5fe025577c1992b1cee5fffd1f0e32ce8a31a833ca3aac94e83bc232e42cd18c0f1ac17860be263066db51bd146d660248406896938c8028cf36b0142e1c"
+            "0xaf88593fa8cea1ae157b30990840ee07a6f3c140971c109f8cbaa698891002bb58775821da126ef10fdd1013a833505f54ca1155d163b177bb490665d0b7af051b"
         );
         assert.ok(!tx.verify(signer2.address));
         assert.ok(tx.verify(signer1.address));
@@ -75,7 +78,7 @@ describe("Transaction", () => {
         await tx.sign(signer2);
         assert.strictEqual(
             tx.signature,
-            "0x3afb2084076819473989e338c441e17fc9555175761dbb0ea51dfb34d87f4b8463954f69853992574cf2719b58de373765efd2bbeec8d533654eb5f61c2b38d61c"
+            "0x336674a6e4be13c074908c33ab48cbf8460ea08319e5eea09a32dd7f64f4ed757761b6045485dec0dabf99bfe04da62af3bc2de5e67b0ad8417b05e14b72714e1b"
         );
         assert.ok(!tx.verify(signer1.address));
         assert.ok(tx.verify(signer2.address));

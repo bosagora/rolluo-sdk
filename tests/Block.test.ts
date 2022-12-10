@@ -20,6 +20,7 @@ describe("Test of Block", () => {
         for (let idx = 0; idx < 7; idx++) {
             txs.push(
                 new Transaction(
+                    0,
                     (12345670 + idx).toString(),
                     "0x064c9Fc53d5936792845ca58778a52317fCf47F2",
                     "0",
@@ -39,6 +40,7 @@ describe("Test of Block", () => {
     it("Test createBlock", () => {
         const txs = [
             new Transaction(
+                0,
                 "00000000",
                 "0x0000000000000000000000000000000000000000",
                 "0",
@@ -48,6 +50,7 @@ describe("Test of Block", () => {
                 "a5c19fed89739383"
             ),
             new Transaction(
+                1,
                 "00000001",
                 "0x0000000000000000000000000000000000000000",
                 "0",
@@ -57,6 +60,7 @@ describe("Test of Block", () => {
                 "a5c19fed89739383"
             ),
             new Transaction(
+                2,
                 "00000002",
                 "0x0000000000000000000000000000000000000000",
                 "0",
@@ -66,6 +70,7 @@ describe("Test of Block", () => {
                 "a5c19fed89739383"
             ),
             new Transaction(
+                3,
                 "00000003",
                 "0x0000000000000000000000000000000000000000",
                 "0",
@@ -75,6 +80,7 @@ describe("Test of Block", () => {
                 "a5c19fed89739383"
             ),
             new Transaction(
+                4,
                 "00000004",
                 "0x0000000000000000000000000000000000000000",
                 "0",

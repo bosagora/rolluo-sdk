@@ -11,7 +11,7 @@
 import { Block, Hash, hashFull, Transaction } from "../src";
 
 import * as assert from "assert";
-import * as ethers from "ethers";
+import { BigNumber, Wallet } from "ethers";
 
 describe("Test of Block", () => {
     it("Test buildMerkleTree", () => {
@@ -23,7 +23,7 @@ describe("Test of Block", () => {
                     (12345670 + idx).toString(),
                     "0x064c9Fc53d5936792845ca58778a52317fCf47F2",
                     "0",
-                    BigInt(idx + 1),
+                    BigNumber.from(idx + 1),
                     1668044556,
                     "997DE626B2D417F0361D61C09EB907A57226DB5B",
                     "a5c19fed89739383"
@@ -42,7 +42,7 @@ describe("Test of Block", () => {
                 "00000000",
                 "0x0000000000000000000000000000000000000000",
                 "0",
-                1000000000n,
+                BigNumber.from(1000000000),
                 1668044556,
                 "997DE626B2D417F0361D61C09EB907A57226DB5B",
                 "a5c19fed89739383"
@@ -51,7 +51,7 @@ describe("Test of Block", () => {
                 "00000001",
                 "0x0000000000000000000000000000000000000000",
                 "0",
-                1000000000n,
+                BigNumber.from(1000000000),
                 1668044556,
                 "997DE626B2D417F0361D61C09EB907A57226DB5B",
                 "a5c19fed89739383"
@@ -60,7 +60,7 @@ describe("Test of Block", () => {
                 "00000002",
                 "0x0000000000000000000000000000000000000000",
                 "0",
-                1000000000n,
+                BigNumber.from(1000000000),
                 1668044556,
                 "997DE626B2D417F0361D61C09EB907A57226DB5B",
                 "a5c19fed89739383"
@@ -69,7 +69,7 @@ describe("Test of Block", () => {
                 "00000003",
                 "0x0000000000000000000000000000000000000000",
                 "0",
-                1000000000n,
+                BigNumber.from(1000000000),
                 1668044556,
                 "997DE626B2D417F0361D61C09EB907A57226DB5B",
                 "a5c19fed89739383"
@@ -78,13 +78,13 @@ describe("Test of Block", () => {
                 "00000004",
                 "0x0000000000000000000000000000000000000000",
                 "0",
-                1000000000n,
+                BigNumber.from(1000000000),
                 1668044556,
                 "997DE626B2D417F0361D61C09EB907A57226DB5B",
                 "a5c19fed89739383"
             ),
         ];
-        const signer = new ethers.Wallet("0xf6dda8e03f9dce37c081e5d178c1fda2ebdb90b5b099de1a555a658270d8c47d");
+        const signer = new Wallet("0xf6dda8e03f9dce37c081e5d178c1fda2ebdb90b5b099de1a555a658270d8c47d");
         const prev_hash = Hash.Null;
         const prev_height = 0n;
 

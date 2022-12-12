@@ -14,6 +14,7 @@ import { JSONValidator } from "../../utils/JSONValidator";
 import { hashFull, hashPart } from "../common/Hash";
 
 export interface ITransaction {
+    sequence: number;
     trade_id: string;
     user_id: string;
     state: string;
@@ -31,6 +32,11 @@ export interface ITransaction {
  * An exception occurs if the required property is not present.
  */
 export class Transaction implements ITransaction {
+    /**
+     * Of all transactions, it starts at zero and increases by one in a unique sequence
+     */
+    public sequence: number;
+
     /**
      * ID of the trade
      */
@@ -80,6 +86,7 @@ export class Transaction implements ITransaction {
      * Constructor
      */
     constructor(
+        sequence: number,
         trade_id: string,
         user_id: string,
         state: string,
@@ -90,6 +97,7 @@ export class Transaction implements ITransaction {
         signer?: string,
         signature?: string
     ) {
+        this.sequence = sequence;
         this.trade_id = trade_id;
         this.user_id = user_id;
         this.state = state;
@@ -119,6 +127,7 @@ export class Transaction implements ITransaction {
         JSONValidator.isValidOtherwiseThrow("Transaction", value);
 
         return new Transaction(
+            value.sequence,
             value.trade_id,
             value.user_id,
             value.state,
@@ -136,6 +145,7 @@ export class Transaction implements ITransaction {
      * @param buffer The buffer where collected data is stored
      */
     public computeHash(buffer: SmartBuffer) {
+        hashPart(this.sequence, buffer);
         hashPart(this.trade_id, buffer);
         hashPart(this.user_id, buffer);
         hashPart(this.state, buffer);
@@ -151,6 +161,7 @@ export class Transaction implements ITransaction {
      */
     public toJSON(): any {
         return {
+            sequence: this.sequence,
             trade_id: this.trade_id,
             user_id: this.user_id,
             state: this.state,
@@ -168,6 +179,7 @@ export class Transaction implements ITransaction {
      */
     public clone(): Transaction {
         return new Transaction(
+            this.sequence,
             this.trade_id,
             this.user_id,
             this.state,

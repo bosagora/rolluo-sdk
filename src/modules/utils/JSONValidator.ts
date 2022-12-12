@@ -78,6 +78,9 @@ export class JSONValidator {
                 title: "Transaction",
                 type: "object",
                 properties: {
+                    sequence: {
+                        type: "number",
+                    },
                     trade_id: {
                         type: "string",
                     },
@@ -108,6 +111,7 @@ export class JSONValidator {
                 },
                 additionalProperties: false,
                 required: [
+                    "sequence",
                     "trade_id",
                     "user_id",
                     "state",

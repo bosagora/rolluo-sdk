@@ -8,9 +8,11 @@
  *       MIT License. See LICENSE for details.
  */
 
+import { BigNumber } from "ethers";
 import { Hash, hash, hashMulti, iota } from "../src";
 
 import * as assert from "assert";
+import { hashFull } from "../lib";
 
 describe("Hash", () => {
     // Buffer has the same content. However, when printed with hex strings,
@@ -105,5 +107,13 @@ describe("Hash", () => {
 
         // Check
         assert.strictEqual(key.toString(), "0xbe9788916124ba14cd316a94c2bb2e8743196a78917518370d5725804b7f96cc");
+    });
+
+    it("Test of BigNumber's hash", () => {
+        const value = BigNumber.from("9007199254740992");
+        const bytes2 = Buffer.from("20000000000000", "hex");
+        const h1 = hashFull(value);
+        const h2 = hash(bytes2);
+        assert.strictEqual(h1.toString(), h2.toString());
     });
 });

@@ -8,17 +8,16 @@
  *       MIT License. See LICENSE for details.
  */
 
-import * as ethers from "ethers";
-
+import { BigNumber, Signer, utils } from "ethers";
+import { SmartBuffer } from "smart-buffer";
 import { JSONValidator } from "../../utils/JSONValidator";
 import { hashFull, hashPart } from "../common/Hash";
-import { SmartBuffer } from "smart-buffer";
 
 export interface ITransaction {
     trade_id: string;
     user_id: string;
     state: string;
-    amount: bigint;
+    amount: BigNumber;
     timestamp: number;
     exchange_user_id: string;
     exchange_id: string;
@@ -50,7 +49,7 @@ export class Transaction implements ITransaction {
     /**
      * The amount of sending
      */
-    public amount: bigint;
+    public amount: BigNumber;
 
     /**
      * The time stamp
@@ -84,7 +83,7 @@ export class Transaction implements ITransaction {
         trade_id: string,
         user_id: string,
         state: string,
-        amount: bigint,
+        amount: BigNumber,
         timestamp: number,
         exchange_user_id: string,
         exchange_id: string,
@@ -123,7 +122,7 @@ export class Transaction implements ITransaction {
             value.trade_id,
             value.user_id,
             value.state,
-            BigInt(value.amount),
+            BigNumber.from(value.amount),
             value.timestamp,
             value.exchange_user_id,
             value.exchange_id,
@@ -185,7 +184,7 @@ export class Transaction implements ITransaction {
      * Sign with the wallet entered the parameters
      * @param signer Instances that can be signed
      */
-    public async sign(signer: ethers.Signer) {
+    public async sign(signer: Signer) {
         this.signer = await signer.getAddress();
         const h = hashFull(this);
         this.signature = await signer.signMessage(h.data);
@@ -199,7 +198,7 @@ export class Transaction implements ITransaction {
         const h = hashFull(this);
         let res: string;
         try {
-            res = ethers.utils.verifyMessage(h.data, this.signature);
+            res = utils.verifyMessage(h.data, this.signature);
         } catch (error) {
             return false;
         }

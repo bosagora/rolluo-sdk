@@ -9,8 +9,9 @@
  */
 
 import crypto from "crypto";
-import { Utils } from "../../utils/Utils";
+import { BigNumber } from "ethers";
 import { SmartBuffer } from "smart-buffer";
+import { Utils } from "../../utils/Utils";
 
 /**
  * The Class for creating hash
@@ -211,12 +212,19 @@ export function hashPart(record: any, buffer: SmartBuffer) {
     }
 
     if (typeof record === "number") {
-        buffer.writeUInt32LE(record);
+        buffer.writeBigUInt64LE(BigInt(record));
         return;
     }
 
     if (typeof record === "bigint") {
         buffer.writeBigUInt64LE(record);
+        return;
+    }
+
+    if (record instanceof BigNumber) {
+        const raw = record.toHexString();
+        const hex = raw.substring(0, 2) === "0x" ? raw.substring(2) : raw;
+        buffer.writeBuffer(Buffer.from(hex, "hex"));
         return;
     }
 

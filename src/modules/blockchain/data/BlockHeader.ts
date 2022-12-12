@@ -8,9 +8,9 @@
  *       MIT License. See LICENSE for details.
  */
 
+import { SmartBuffer } from "smart-buffer";
 import { JSONValidator } from "../../utils/JSONValidator";
 import { Hash } from "../common/Hash";
-import { SmartBuffer } from "smart-buffer";
 
 /**
  * The class that defines the header of a block.

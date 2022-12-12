@@ -27,7 +27,7 @@
     "homepage": "https://bosagora.github.io/rollup-sdk/",
     "dependencies": {
         "ajv": "^6.12.6",
-        "ethers": "^5.7.2",
+        "ethers": "^5.6.9",
         "smart-buffer": "^4.1.0",
         "urijs": "^1.19.7"
     },

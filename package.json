@@ -1,6 +1,6 @@
 {
     "name": "rollup-pm-sdk",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "The TypeScript Rollup SDK library",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",

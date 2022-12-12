@@ -8,6 +8,7 @@
  *       MIT License. See LICENSE for details.
  */
 
+import { SmartBuffer } from "smart-buffer";
 import { JSONValidator } from "../../utils/JSONValidator";
 import { Utils } from "../../utils/Utils";
 import { Hash, hashFull, hashMulti } from "../common/Hash";
@@ -107,5 +108,13 @@ export class Block {
         const block_header = new BlockHeader(prev_hash, merkle_root, prev_height + 1n, Utils.getTimeStamp());
 
         return new Block(block_header, txs, merkle_tree);
+    }
+
+    /**
+     * Collects data to create a hash.
+     * @param buffer The buffer where collected data is stored
+     */
+    public computeHash(buffer: SmartBuffer) {
+        this.header.computeHash(buffer);
     }
 }

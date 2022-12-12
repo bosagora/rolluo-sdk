@@ -95,5 +95,8 @@ describe("Test of Block", () => {
         const block2 = Block.reviver("", block_json);
 
         assert.deepStrictEqual(block, block2);
+
+        // Check hash of Block
+        assert.deepStrictEqual(hashFull(block2), hashFull(block2.header));
     });
 });

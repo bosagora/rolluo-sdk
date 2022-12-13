@@ -205,7 +205,7 @@ export function hashPart(record: any, buffer: SmartBuffer) {
     }
 
     if (typeof record === "string") {
-        const buf = Buffer.from(record);
+        const buf = Buffer.from(record, "utf8");
         hashVarInt(BigInt(buf.length), buffer);
         buffer.writeBuffer(buf);
         return;
